@@ -43,3 +43,35 @@ if(buttonDelete.length > 0){
         })
     })
 }
+
+//sort
+const sort = document.querySelector("[sort]")
+if(sort){
+    let url = new URL(window.location.href)
+    const sortSelect = sort.querySelector("[sort-select")
+    const sortClear = sort.querySelector("[sort-clear]")
+
+    sortSelect.addEventListener("change", (e)=>{
+        const value = (e.target.value).split("-")
+        const [sortKey, sortValue] = value
+        url.searchParams.set("sortKey",sortKey)
+        url.searchParams.set("sortValue",sortValue)
+
+        window.location.href = url.href
+        
+    })
+    sortClear.addEventListener("click",()=>{
+        url.searchParams.delete("sortKey")
+        url.searchParams.delete("sortValue")
+        window.location.href = url.href
+
+    })
+
+    const sortKey = url.searchParams.get("sortKey")
+    const sortValue = url.searchParams.get("sortValue")
+    if(sortKey && sortValue){
+        const stringSort = `${sortKey}-${sortValue}`
+        const sortSelect = sort.querySelector(`option[value='${stringSort}']`)
+        sortSelect.selected = true
+    }
+}
