@@ -126,8 +126,6 @@ module.exports.create = async (req, res) => {
 
 // [POST] /create
 module.exports.save = async (req, res) => {
-    // console.log(req.body)
-
     req.body.price = parseInt(req.body.price)
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
@@ -139,10 +137,10 @@ module.exports.save = async (req, res) => {
     } else{
         req.body.position = parseInt(req.body.position)
     }
-    if(req.file){
-        req.body.thumbnail = `/uploads/${req.file.filename}`
+    // if(req.file){
+    //     req.body.thumbnail = `/uploads/${req.file.filename}`
 
-    }
+    // }
     // console.log(req.body)
     const product = new Product(req.body)
     await product.save()
@@ -171,7 +169,6 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /edit/:id
 module.exports.update = async (req, res) => {
-    // console.log(req.body)
 
     req.body.price = parseInt(req.body.price)
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
@@ -184,10 +181,10 @@ module.exports.update = async (req, res) => {
     } else{
         req.body.position = parseInt(req.body.position)
     }
-    if(req.file){
-        req.body.thumbnail = `/uploads/${req.file.filename}`
+    // if(req.file){
+    //     req.body.thumbnail = `/uploads/${req.file.filename}`
 
-    }
+    // }
     // console.log(req.body)
     try{
         await Product.updateOne(
