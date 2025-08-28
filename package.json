@@ -23,6 +23,7 @@
     "multer": "^2.0.2",
     "pug": "^3.0.3",
     "streamifier": "^0.1.1",
+    "tinymce": "^8.0.2",
     "update": "^0.7.4"
   },
   "devDependencies": {

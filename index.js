@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const path = require("path")
 var methodOverride = require('method-override')
 const database = require('./config/database')
 const route = require('./routes/client/index.route')
@@ -22,6 +23,8 @@ app.use(cookieParser('GSHDGEUDVHS'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
+//tinyMCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 const port = process.env.PORT
 
 app.set('views',`${__dirname}/views`)
