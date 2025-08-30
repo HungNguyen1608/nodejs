@@ -1,9 +1,11 @@
-module.exports.createTree = function createTree(arr, parentId = ""){
+module.exports.createTree = function createTree(arr, parentId = "", counter = { value: 0 }){
     const tree = []
     arr.forEach(item =>{
         if(item.parent_id === parentId){
+            counter.value++
             const newItem = item
-            const children = createTree(arr, item.id)
+            newItem.index = counter.value
+            const children = createTree(arr, item.id, counter)
             if(children.length > 0){
                 newItem.children = children
             }

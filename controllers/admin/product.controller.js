@@ -1,8 +1,10 @@
 const Product = require("../../models/product.model")
+const ProductCategory = require("../../models/product-category.model")
 const filterStatusHelper = require("../../helpers/filterStatus")
 const searchHelper = require("../../helpers/search")
 const paginationHelper = require("../../helpers/pagination")
 const systemConfig = require("../../config/system")
+const createTreeHelper = require("../../helpers/createTree")
 
 // [GET] /admin/products
 module.exports.index = async (req, res) =>{
@@ -126,8 +128,14 @@ module.exports.delete = async (req, res) => {
 
 // [GET] /create
 module.exports.create = async (req, res) => {
+    const records = await ProductCategory.find({
+        deleted: false
+    })
+    const newRecords = createTreeHelper.createTree(records)
+
     res.render("admin/pages/product/create",{
-        pageTitle: "Thêm mới sản phẩm"
+        pageTitle: "Thêm mới sản phẩm",
+        records: newRecords
     })
 }
 
@@ -162,10 +170,15 @@ module.exports.edit = async (req, res) => {
             deleted: false,
             _id: req.params.id
         }
+        const records = await ProductCategory.find({
+            deleted: false
+        })
+        const newRecords = createTreeHelper.createTree(records)
         const product = await Product.findOne(find)
         res.render("admin/pages/product/edit",{
             pageTitle: "Chỉnh sửa sản phẩm",
-            product: product
+            product: product,
+            newRecords: newRecords
         })
     }catch(e){
         req.flash("error","Đã xảy ra lỗi khi truy vấn")

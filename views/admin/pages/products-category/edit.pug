@@ -3,14 +3,13 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main 
-    h1(class="mb-4") Thêm mới sản phẩm 
+    h1(class="mb-4") Chỉnh sửa danh mục sản phẩm 
     +alert-error(3000)
     form(
-        action=`${prefixAdmin}/products/create`
-        id="form-create-product"
+        action=`${prefixAdmin}/products-category/edit/${productCategory.id}?_method=PATCH`
         method="POST"
         enctype="multipart/form-data"
-    )
+        )
         div(class="form-group")
             label(for="title") Tiêu đề
             input(
@@ -18,18 +17,19 @@ block main
                 class="form-control"
                 id="title"
                 name="title"
-              
-            ) 
+                value=productCategory.title
+            )
         div(class="form-group")
-            label(for="product_category_id") Danh mục 
+            label(for="parent_id") Danh mục cha 
                 select(
-                    name="product_category_id"
-                    id="product_category_id"
+                    name="parent_id"
+                    id="parent_id"
                     class="form-control"
                 )
                     option(value="") --chọn danh mục cha --
-                    if(records)
-                        +select-tree(records)
+                    if(newRecords)
+                        +select-tree(newRecords, 1, productCategory.parent_id )
+                            
         div(class="form-group")
             label(for="description") Mô tả
             textarea(
@@ -38,42 +38,13 @@ block main
                 id="description"
                 name="description"
                 rows="5"
-            )
-        div(class="form-group")
-            label(for="price") Giá
-            input(
-                type="number"
-                class="form-control"
-                id="price"
-                name="price"
-                min="0"
-                value="0"
-            ) 
-        div(class="form-group")
-            label(for="discount") Giảm giá
-            input(
-                type="number"
-                class="form-control"
-                id="discount"
-                name="discountPercentage"
-                min="0"
-                value="0"
-            ) 
-        div(class="form-group")
-            label(for="stock") Số lượng
-            input(
-                type="number"
-                class="form-control"
-                id="stock"
-                name="stock"
-                min="0"
-                value="0"
-            ) 
+                
+            ) #{productCategory.description}
         div(
             class="form-group"
             upload-image
         )
-            label(for="thumbnal") Ảnh
+            label(for="thumbnail") Ảnh
             input(
                 type="file"
                 class="form-control-file"
@@ -83,7 +54,7 @@ block main
                 upload-image-input
             ) 
             img(
-                src=""
+                src=productCategory.thumbnail
                 upload-image-preview
             )
         div(class="form-group")
@@ -95,6 +66,7 @@ block main
                 name="position"
                 placeholder="Tự động tăng"
                 min="1"
+                value=productCategory.position
             ) 
         div(class="form-group form-check form-check-inline")
             input(
@@ -103,7 +75,7 @@ block main
                 id="statusActive"
                 name="status"
                 value="active"
-                checked
+                checked=(productCategory.status=="active")
             )
             label(for="statusActive" class="form-check-label") Hoạt động
         div(class="form-group form-check form-check-inline")
@@ -113,13 +85,14 @@ block main
                 id="statusActive"
                 name="status"
                 value="inactive"
+                checked=(productCategory.status=="inactive")
             )
             label(for="statusActive" class="form-check-label") Dừng hoạt động
         div(class="form-group")
             button(
                 type="submit"
                 class="btn btn-primary"
-            ) Tạo sản phẩm
+            ) Lưu
 
                 
         
