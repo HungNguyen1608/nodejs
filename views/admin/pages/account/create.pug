@@ -1,94 +1,97 @@
 extends ../../layouts/default.pug
 
 block main 
-    h1(class="mb-4") Thêm mới tài khoản
+    if(role.permissions.includes("accounts_create"))
+        h1(class="mb-4") Thêm mới tài khoản
 
-    form(
-        action = `${prefixAdmin}/accounts/create`
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="email") Email
-            input(
-                type="email"
-                class="form-control"
-                id="email"
-                name="email"
-                required 
-            )
-        div(class="form-group")
-            label(for="fullname") Họ tên
-            input(
-                type="text"
-                class="form-control"
-                id="fullname"
-                name="fullname"
-                required 
-            )
-        div(class="form-group")
-            label(for="password") Password
-            input(
-                type="password"
-                class="form-control"
-                id="password"
-                name="password"
-                required 
-            )
-        //- div(class="form-group")
-        //-     label(for="password") Confirm password
-        //-     input(
-        //-         type="password"
-        //-         class="form-control"
-        //-         id="confirm_password"
-        //-         name="confirm_spassword"
-        //-         required 
-        //-     )
-        div(
-            class="form-group"
-            upload-image
+        form(
+            action = `${prefixAdmin}/accounts/create`
+            method="POST"
+            enctype="multipart/form-data"
         )
-            label(for="thumbnal") Ảnh
-            input(
-                type="file"
-                class="form-control-file"
-                id="avartar"
-                name="avartar"
-                accept="image/*"
-                upload-image-input
-            ) 
-            img(
-                src=""
-                upload-image-preview
+            div(class="form-group")
+                label(for="email") Email
+                input(
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    required 
+                )
+            div(class="form-group")
+                label(for="fullname") Họ tên
+                input(
+                    type="text"
+                    class="form-control"
+                    id="fullname"
+                    name="fullname"
+                    required 
+                )
+            div(class="form-group")
+                label(for="password") Password
+                input(
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    required 
+                )
+            //- div(class="form-group")
+            //-     label(for="password") Confirm password
+            //-     input(
+            //-         type="password"
+            //-         class="form-control"
+            //-         id="confirm_password"
+            //-         name="confirm_spassword"
+            //-         required 
+            //-     )
+            div(
+                class="form-group"
+                upload-image
             )
-        div(class="form-group")
-            label(for="role_id") Phân quyền 
-            select(name="role_id" id= "role_id" class="form-control")
-                option(disabled) --Chọn--
-                each item in roles
-                    option(value=item.id) #{item.title}
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusActive"
-                name="status"
-                value="active"
-                checked
-            )
-            label(for="statusActive" class="form-check-label") Hoạt động
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="form-check-input"
-                id="statusActive"
-                name="status"
-                value="inactive"
-            )
-            label(for="statusActive" class="form-check-label") Dừng hoạt động
+                label(for="thumbnal") Ảnh
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="avartar"
+                    name="avartar"
+                    accept="image/*"
+                    upload-image-input
+                ) 
+                img(
+                    src=""
+                    upload-image-preview
+                )
+            div(class="form-group")
+                label(for="role_id") Phân quyền 
+                select(name="role_id" id= "role_id" class="form-control")
+                    option(disabled) --Chọn--
+                    each item in roles
+                        option(value=item.id) #{item.title}
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusActive"
+                    name="status"
+                    value="active"
+                    checked
+                )
+                label(for="statusActive" class="form-check-label") Hoạt động
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusActive"
+                    name="status"
+                    value="inactive"
+                )
+                label(for="statusActive" class="form-check-label") Dừng hoạt động
 
-        div(class="form-group")
-            button(
-                class="btn btn-primary"
-                type="submit"
-            ) Tạo mới
+            div(class="form-group")
+                button(
+                    class="btn btn-primary"
+                    type="submit"
+                ) Tạo mới
+    else 
+        h1 Bạn không có quyền truy cập

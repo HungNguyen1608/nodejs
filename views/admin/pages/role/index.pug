@@ -4,66 +4,71 @@ include ../../mixins/alert.pug
 include ../../mixins/sort.pug
 
 block main 
-    +box-head("Nhóm quyền")
-    +alert-success(3000)
-    +alert-error(3000)
-    .card.mb-3 
-        .card-header Danh sách 
-            .card-body
-                .row 
-                    .col-8 
-                    .col-4 
-                        a(
-                            href= `${prefixAdmin}/roles/create`
-                            class="btn btn-outline-success"
-                        ) Thêm mới
+    if(role.permissions.includes("roles_view"))
+        +box-head("Nhóm quyền")
+        +alert-success(3000)
+        +alert-error(3000)
+        .card.mb-3 
+            .card-header Danh sách 
+                .card-body
+                    .row 
+                        .col-8 
+                        .col-4 
+                            a(
+                                href= `${prefixAdmin}/roles/create`
+                                class="btn btn-outline-success"
+                            ) Thêm mới
 
-                table(
-                    class="table table-hover table-sm"
-                    checkbox-multi
-                )
-                    thead   
-                        tr 
-                            th STT 
-                            th Nhóm quyền
-                            th Mô tả ngắn
-                            th Hành động
-                    tbody 
-                    if(records.length > 0)
-                        each item,index in records
+                    table(
+                        class="table table-hover table-sm"
+                        checkbox-multi
+                    )
+                        thead   
                             tr 
-                                td #{index+1}
-                                //- td #{pagination.limitItem*(pagination.currentPage -1) + (index+1)}
-                                td #{item.title}
-                                td #{item.description}
-                                    
-                                td 
-                                    a(
-                                        href=`${prefixAdmin}/roles/detail/${item.id}`
-                                        class="btn btn-secondary btn-sm"
-                                    ) Chi tiết
-                                    a(
-                                        href=`${prefixAdmin}/roles/edit/${item.id}`
-                                        class="btn btn-warning btn-sm"
-                                    ) Sửa
-                                    button(
-                                        class="btn btn-danger btn-sm ml-1"
-                                        data-id=item.id
-                                        button-delete
-                                    ) Xoá 
-                    else 
-                        tr 
-                            td(colspan="4" class="text-center") Chưa có quyền nào được tạo
-    form(
-        action="" 
-        method="POST"
-        id="form-change-status"
-        data-path=`${prefixAdmin}/roles/change-status`
-    )
-    form(
-        action="" 
-        method="POST"
-        id="form-delete"
-        data-path=`${prefixAdmin}/roles/delete`
-    )
-         
+                                th STT 
+                                th Nhóm quyền
+                                th Mô tả ngắn
+                                th Hành động
+                        tbody 
+                        if(records.length > 0)
+                            each item,index in records
+                                tr 
+                                    td #{index+1}
+                                    //- td #{pagination.limitItem*(pagination.currentPage -1) + (index+1)}
+                                    td #{item.title}
+                                    td #{item.description}
+                                        
+                                    td 
+                                        a(
+                                            href=`${prefixAdmin}/roles/detail/${item.id}`
+                                            class="btn btn-secondary btn-sm"
+                                        ) Chi tiết
+                                        if(role.permissions.includes("roles_edit"))
+                                            a(
+                                                href=`${prefixAdmin}/roles/edit/${item.id}`
+                                                class="btn btn-warning btn-sm"
+                                            ) Sửa
+                                        if(role.permissions.includes("roles_delete"))
+                                            button(
+                                                class="btn btn-danger btn-sm ml-1"
+                                                data-id=item.id
+                                                button-delete
+                                            ) Xoá 
+                        else 
+                            tr 
+                                td(colspan="4" class="text-center") Chưa có quyền nào được tạo
+        form(
+            action="" 
+            method="POST"
+            id="form-change-status"
+            data-path=`${prefixAdmin}/roles/change-status`
+        )
+        form(
+            action="" 
+            method="POST"
+            id="form-delete"
+            data-path=`${prefixAdmin}/roles/delete`
+        )
+    else 
+        h1 Bạn không có quyền truy cập
+            
