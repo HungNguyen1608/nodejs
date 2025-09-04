@@ -11,4 +11,9 @@ route.post('/create', controller.save)
 route.get('/edit/:id', controller.edit)
 
 route.patch('/edit/:id', controller.update)
+
+route.get('/permissions', controller.permissions)
+
+route.patch('/permissions', controller.updatePermission)
+
 module.exports = route
