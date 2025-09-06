@@ -11,35 +11,47 @@ const bodyParser = require("body-parser")
 const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
 const session = require("express-session")
+const moment = require("moment")
 
-database.connect();
-const app = express()
+//connect db
+database.connect()
+  .then(() => {
+      const app = express()
 
-// override with POST having ?_method=DELETE
-app.use(methodOverride('_method'))
+      // override with POST having ?_method=DELETE
+      app.use(methodOverride('_method'))
 
-//flash
-app.use(cookieParser('GSHDGEUDVHS'));
-app.use(session({ cookie: { maxAge: 60000 }}));
-app.use(flash());
+      //flash
+      app.use(cookieParser('GSHDGEUDVHS'));
+      app.use(session({ cookie: { maxAge: 60000 }}));
+      app.use(flash());
 
-//tinyMCE
-app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
-const port = process.env.PORT
+      //tinyMCE
+      app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+      const port = process.env.PORT
 
-app.set('views',`${__dirname}/views`)
-app.set('view engine','pug')
+      //view engine
+      app.set('views', `${__dirname}/views`)
+      app.set('view engine', 'pug')
 
-app.locals.prefixAdmin = systemConfig.prefixAdmin;
+      //set variable global
+      app.locals.prefixAdmin = systemConfig.prefixAdmin;
+      app.locals.moment = moment
 
-app.use(express.static(`${__dirname}/public`))
+      //static folder public
+      app.use(express.static(`${__dirname}/public`))
 
-app.use(bodyParser.urlencoded( { extended: false}))
-app.use(bodyParser.json());
+      app.use(bodyParser.urlencoded({ extended: false }))
+      app.use(bodyParser.json());
 
-route(app)
-routeAdmin(app)
+      //route
+      route(app)
+      routeAdmin(app)
 
-app.listen(port, () => {
-    console.log('App start')
-})
+      app.listen(port, () => {
+          console.log('🚀 App start on port', port)
+      })
+  })
+  .catch(err => {
+      console.error("❌ Cannot connect to MongoDB:", err);
+  });

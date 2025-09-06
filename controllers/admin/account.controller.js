@@ -78,6 +78,7 @@ module.exports.edit = async (req, res) => {
 // [PATCH] /admin/roles/edit/:id
 module.exports.update = async (req, res) => {
     try {
+        const id = req.params.id
         const emailExist = await Account.findOne({
             _id: { $ne: id}, //not equal
             email: req.body.email,
@@ -87,8 +88,9 @@ module.exports.update = async (req, res) => {
             req.body.password = md5(req.body.password)
             await Account.updateOne({ _id: req.params.id }, req.body)
             req.flash("success", "Chỉnh sủa tài khoản thành công")
+        }else{
+            req.flash("error", "Email đã tồn tại")
         }
-        req.flash("error", "Email đã tồn tại")
     } catch (error) {
         req.flash("error", "Chỉnh sửa tài khoản thất bại")
     }
