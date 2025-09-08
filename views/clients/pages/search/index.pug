@@ -7,5 +7,7 @@ block main
         .row 
             .col-12 
                 +box-head(pageTitle)
-        
-        +product-layout(products)
+        if(products.length > 0)
+            +product-layout(products)
+        else 
+            h3(class="text-center") Không tìm thấy sản phẩm nào
