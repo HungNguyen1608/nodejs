@@ -1,17 +1,13 @@
 const mongoose = require("mongoose")
 
 const cartSchema = new mongoose.Schema({
-    title: String,
-    description: String,
-    permissions: {
-        type: Array,
-        default: []
-    },
-    deleted: {
-        type:Boolean,
-        default: false
-    },
-    deletedAt: Date
+    user_id: String,
+    products: [
+        {
+            product_id: String,
+            quantity: Number,
+        }
+    ]
 
 },
 {
