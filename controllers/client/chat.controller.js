@@ -3,6 +3,8 @@ const User = require("../../models/user.model")
 
 module.exports.index = async (req, res) => {
     const userId = res.locals.user.id
+    const fullname = res.locals.user.fullname
+
     _io.once("connection", (socket) => {
         console.log('a user connected', socket.id)
         socket.on("CLIENT_SEND_MESSAGE", async (content) =>{
@@ -12,6 +14,11 @@ module.exports.index = async (req, res) => {
 
             })
             await chat.save()
+            _io.emit("SERVER_RETURN_MESSAGE",{
+                fullname:fullname,
+                user_id: userId,
+                content: content
+            })
         })
     })
     const chats = await Chat.find({
