@@ -294,3 +294,109 @@
     border-radius: 50%;
     cursor: pointer;
 }
+
+/* Vùng chat */
+.inner-body {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scroll-behavior: smooth;
+}
+
+/* Tin nhắn đến */
+.inner-incoming {
+    align-self: flex-start;
+    max-width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inner-incoming .inner-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    margin-bottom: 3px;
+}
+
+.inner-incoming .inner-content {
+    background: #eaeaea;
+    padding: 10px 14px;
+    border-radius: 15px 15px 15px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: inline-block;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+/* Tin nhắn đi */
+.inner-outgoing {
+    align-self: flex-end;
+    max-width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.inner-outgoing .inner-content {
+    background: #4a90e2;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 15px 15px 0 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: inline-block;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+/* Footer form (cố định dưới) */
+.inner-foot {
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    padding: 8px 0 0;
+    position: sticky;
+    bottom: 0;
+    background: #fafafa;
+}
+
+/* Form nhập */
+.inner-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.inner-input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    background: #fff;
+}
+
+.inner-input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74,144,226,0.2);
+}
+
+.inner-button {
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 14px;
+}
+
+.inner-button:hover {
+    background: #357abd;
+}

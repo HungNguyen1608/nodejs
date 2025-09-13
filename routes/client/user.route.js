@@ -2,6 +2,7 @@ const express = require('express')
 const route = express.Router()
 const controller = require('../../controllers/client/user.controller')
 const validate = require('../../validates/client/user.validate')
+const authMiddleware = require('../../middlewares/client/auth.middleware')
 
 route.get('/register',controller.register)
 
@@ -31,6 +32,10 @@ route.get('/password/reset', controller.resetPassword)
 
 route.post('/password/reset',
     validate.resetPasswordPost,
-    controller.resetPasswordPost)
+    controller.resetPasswordPost
+)
 
+route.get('/info', authMiddleware.requireLogin,
+    controller.info
+)
 module.exports = route

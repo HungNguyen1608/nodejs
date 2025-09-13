@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/box-head.pug
+
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head("Thông tin tài khoản")
+        .row 
+            .col-12 
+                if(user.fullname)
+                    div(class="mb-4") Tên đầy đủ: <b> #{user.fullname} </b>
+                if(user.email)
+                    div(class="mb-4") Email: <b> #{user.email} </b>
+                if(user.phone)
+                    div(class="mb-4") Điện thoại: <b> #{user.phone} </b>
+                if(user.avartar)
+                    div(class="mb-4") Ảnh đại diện:
+                        img(
+                            src=user.avartar style="width:100px"
+                        )
+                if(user.status)
+                    div(class="mb-4") 
+                        span Trạng thái:    
+                            if(user.status === "active")
+                                span(class="badge badge-success") Hoạt động
+                            else 
+                                span(class="badge badge-success") Dừng hoạt động

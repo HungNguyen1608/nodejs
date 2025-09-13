@@ -1,4 +1,5 @@
 const User = require("../../models/user.model")
+const Cart = require("../../models/cart.model")
 const md5 = require("md5")
 const generateHelper = require("../../helpers/generate")
 const ForgotPassword = require("../../models/forgot-password.model")
@@ -59,6 +60,12 @@ module.exports.postLogin = async (req, res) => {
         res.redirect(`/user/login`)
         return
     }
+    await Cart.updateOne({
+        _id: req.cookies.cartId
+    },
+    {
+        user_id: user.id
+    })
     res.cookie("tokenUser",user.tokenUser)
     res.redirect("/")
 }
@@ -149,4 +156,12 @@ module.exports.resetPasswordPost = async (req, res) => {
     })
     req.flash("success","Thay đổi mật khẩu thành công")
     res.redirect("/")
+}
+
+//[GET] /user/info
+module.exports.info = async (req, res) => {
+
+    res.render("clients/pages/user/info",{
+        pageTitle: "Thông tin cá nhân",
+    })
 }

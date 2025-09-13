@@ -6,7 +6,7 @@ header.header
             .col-3 
                 .inner-logo 
                     a(href="/")
-                        img(src="/images/logo.svg", alt="logo")
+                        img(src=settingGeneral.logo alt="logo")
             .col-5 
                 form(
                     action="/search"
@@ -38,7 +38,9 @@ header.header
                             a(href="/cart") Giỏ hàng (#{miniCart && miniCart.totalQuantity ? miniCart.totalQuantity : 0})
                         if(user)
                             li 
-                            a(href="/user/logout") Đăng xuất
+                                a(href="/user/info") #{user.fullname}
+                            li 
+                                a(href="/user/logout") Đăng xuất
                         else
                             li 
                                 a(href="/user/login") Đăng nhập
