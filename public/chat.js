@@ -1,3 +1,4 @@
+
 // CLIENT_SEND_MESSAGE
 const formSenData = document.querySelector(".inner-form")
 if(formSenData){
@@ -17,8 +18,8 @@ socket.on("SERVER_RETURN_MESSAGE", (data)=> {
     const div = document.createElement("div")
     console.log(myId)
     console.log(data.user_id)
+    let htmlFullname = ""
     if(String(myId) === String(data.user_id)){
-        htmlFullname= ``
         div.classList.add("inner-outgoing")
     }else{
         htmlFullname = `<div class="inner-name">${data.fullname}</div>`
@@ -39,3 +40,37 @@ const bodyChat = document.querySelector(".inner-body")
 if(bodyChat) {
     bodyChat.scrollTop = bodyChat.scrollHeight;
 }
+
+//show pop up
+import { createPopper } from 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/index.js'
+
+const buttonIcon = document.querySelector('.button-icon')
+const tooltip = document.querySelector('.tooltip')
+
+if (buttonIcon && tooltip) {
+  createPopper(buttonIcon, tooltip, {
+    placement: 'top-start'
+  })
+
+  buttonIcon.addEventListener('click', () => {
+    tooltip.classList.toggle('show')
+  })
+}
+
+//insert icon to input
+const emojiPicker = document.querySelector("emoji-picker")
+if(emojiPicker){
+    const inputChat = document.querySelector(".inner-form input[name='content']")
+    emojiPicker.addEventListener("emoji-click", (event) =>{
+        const icon = event.detail.unicode
+        inputChat.value = inputChat.value + icon
+    })
+    inputChat.addEventListener("keyup", () => {
+        socket.emit("CLIENT_SEND_TYPING","show")
+    })
+}
+
+//input keyup
+socket.on("SERVER_RETURN_TYPING", (data) => {
+    console.log(data)
+})

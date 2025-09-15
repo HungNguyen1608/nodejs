@@ -9,37 +9,36 @@ block main
 
                 .inner-body(my-id=user.id) 
                     each chat in chats
-                        div(class=(chat.user_id == user.id ? "inner-outgoing" : "inner-incoming" ))
+                        div(class=(chat.user_id == user.id ? "inner-outgoing" : "inner-incoming"))
                             if(chat.user_id != user.id)
                                 .inner-name #{chat.infoUser.fullname}
                             .inner-content #{chat.content}
-                    //- .inner-incoming 
-                    //-     .inner-name A 
-                    //-     .inner-content Xin chào 
-                    //- .inner-outgoing 
-                    //-     .inner-content Hi! 
-                    //- .inner-incoming 
-                    //-     .inner-name A 
-                    //-     .inner-content Bạn có đang bận không
-                    //- .inner-outgoing 
-                    //-     .inner-content Mình rảnh lắm he he 😀😀😀
-                    //- .inner-outgoing 
-                    //-     .inner-content Sao nay lại gọi mình vậy
+                    div(class="inner-list-typing")
+                        div(class="box-typing")
+                            div(class="inner-name") Lê Văn A 
+                            div(class="inner-dots")
+                                span 
+                                span 
+                                span
+                        div(class="box-typing")
+                            div(class="inner-name") Lê Văn B
+                            div(class="inner-dots")
+                                span 
+                                span 
+                                span
                 .inner-foot 
-                    form(
-                        class="inner-form"
-                        action=""
-                    )
-                        input(
+                    form.inner-form(action="")
+                        input.inner-input(
                             type="text"
-                            class="inner-input"
                             placeholder="Nhập nội dung..."
                             name="content"
                         )
-                        button(
-                            class="inner-button"
-                            type="submit"
-                        ) 
+                        span.button-icon.btn.btn-light.mx-2
+                            i.fa-solid.fa-face-smile
+                        
+                        button.inner-button(type="submit")
                             i.fa-solid.fa-paper-plane
 
-        
+                    // Tooltip emoji
+                    div.tooltip(role="tooltip")
+                        emoji-picker.light

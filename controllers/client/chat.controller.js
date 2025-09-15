@@ -20,6 +20,13 @@ module.exports.index = async (req, res) => {
                 content: content
             })
         })
+        socket.on("CLIENT_SEND_TYPING", async (type) =>{
+           socket.broadcast.emit("SERVER_RETURN_TYPING",{
+                fullname: fullname,
+                user_id: userId,
+                type: type
+           })
+        })
     })
     const chats = await Chat.find({
         deleted: false
