@@ -485,3 +485,53 @@
   40% { opacity: 0.2; transform: translateY(0); }
   100% { opacity: 0.2; transform: translateY(0); }
 }
+
+/*ảnh trong tin nhắn */
+/* Ảnh trong tin nhắn */
+.inner-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.inner-images img {
+  max-width: 160px;       /* kích thước tối đa mỗi ảnh */
+  max-height: 160px;
+  border-radius: 10px;
+  object-fit: cover;      /* giữ tỉ lệ ảnh, không bị méo */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.inner-images img:hover {
+  transform: scale(1.05);
+}
+.inner-incoming .inner-images {
+  align-self: flex-start;
+}
+
+.inner-outgoing .inner-images {
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+/*preview ảnh*/
+.inner-preview-images{
+  position: relative;
+}
+.inner-preview-images .label-container{
+  display: none;
+}
+.inner-preview-images .input-container{
+  display: none;
+}
+.inner-preview-images .image-preview {
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+}
+.inner-preview-images .image-preview-item{
+  width: 90px;
+  background-size: contain;
+}

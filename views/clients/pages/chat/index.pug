@@ -12,20 +12,18 @@ block main
                         div(class=(chat.user_id == user.id ? "inner-outgoing" : "inner-incoming"))
                             if(chat.user_id != user.id)
                                 .inner-name #{chat.infoUser.fullname}
-                            .inner-content #{chat.content}
+                            if(chat.content)
+                                .inner-content #{chat.content}
+                            if(chat.images)
+                                .inner-images 
+                                    each image in chat.images 
+                                        img(src=image)
                     div(class="inner-list-typing")
-                        div(class="box-typing")
-                            div(class="inner-name") Lê Văn A 
-                            div(class="inner-dots")
-                                span 
-                                span 
-                                span
-                        div(class="box-typing")
-                            div(class="inner-name") Lê Văn B
-                            div(class="inner-dots")
-                                span 
-                                span 
-                                span
+                .inner-preview-images 
+                    div(
+                            class="custom-file-container" 
+                            data-upload-id="upload-file"
+                        )
                 .inner-foot 
                     form.inner-form(action="")
                         input.inner-input(
@@ -35,6 +33,8 @@ block main
                         )
                         span.button-icon.btn.btn-light.mx-2
                             i.fa-solid.fa-face-smile
+                        label.button-icon.btn.btn-light.mx-2.mb-0(for="file-upload-with-preview-upload-file")
+                            i.fa-regular.fa-image
                         
                         button.inner-button(type="submit")
                             i.fa-solid.fa-paper-plane
